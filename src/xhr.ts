@@ -1,9 +1,10 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosReponse } from './types';
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types';
 import { parseHeaders } from './helpers/headers';
+import { createError } from './helpers/error';
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType } = config;
+    const { data = null, url, method = 'get', headers, responseType, timeout } = config;
 
     const request = new XMLHttpRequest();
 
@@ -17,9 +18,14 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (request.readyState !== 4) {
         return;
       }
+
+      if (request.status === 0) {
+        return;
+      }
+
       const responseHeaders = parseHeaders(request.getAllResponseHeaders());
       const responseData = responseType !== 'text' ? request.response : request.responseText;
-      const response: AxiosReponse = {
+      const response: AxiosResponse = {
         data: responseData,
         status: request.status,
         statusText: request.statusText,
@@ -27,7 +33,21 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request
       };
-      resolve(response);
+      handleResponse(response);
+    };
+
+    // 网络超时，默认的值为0，就是用不超时，单位是毫秒
+    if (timeout) {
+      request.timeout = timeout;
+    }
+
+    request.ontimeout = function handleTimeout() {
+      reject(createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED', request));
+    };
+
+    // 网络错误
+    request.onerror = function handleError() {
+      reject(createError(`Network Error...`, config, null, request));
     };
 
     Object.keys(headers).forEach(name => {
@@ -39,5 +59,21 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     });
 
     request.send(data);
+
+    function handleResponse(response: AxiosResponse) {
+      if (response.status >= 200 && response.status <= 300) {
+        resolve(response);
+      } else {
+        reject(
+          createError(
+            `Request failed with status code ${response.status}`,
+            config,
+            null,
+            request,
+            response
+          )
+        );
+      }
+    }
   });
 }
