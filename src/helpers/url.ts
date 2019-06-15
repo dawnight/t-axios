@@ -1,4 +1,4 @@
-import { isDate, isPlainObject } from './utils'
+import { isDate, isPlainObject } from './utils';
 function encode(value: string): string {
   return encodeURIComponent(value)
     .replace(/%40/g, '@')
@@ -7,7 +7,7 @@ function encode(value: string): string {
     .replace(/%2C/gi, ',')
     .replace(/%20/g, '+')
     .replace(/%5B/gi, '(')
-    .replace(/%5D/gi, '0')
+    .replace(/%5D/gi, '0');
 }
 
 /**
@@ -22,49 +22,49 @@ function encode(value: string): string {
  */
 export function buildURL(url: string, params?: any): string {
   if (!params) {
-    return url
+    return url;
   }
 
-  const parts: string[] = []
+  const parts: string[] = [];
 
   Object.keys(params).forEach(key => {
-    const value = params[key]
+    const value = params[key];
 
     if (value === null || typeof value === 'undefined') {
-      return
+      return;
     }
 
-    let values = []
+    let values = [];
 
     if (Array.isArray(value)) {
-      values = value
-      key += '[]'
+      values = value;
+      key += '[]';
     } else {
-      values = [value]
+      values = [value];
     }
 
     values.forEach(value => {
       if (isDate(value)) {
-        value = value.toISOString()
+        value = value.toISOString();
       } else if (isPlainObject(value)) {
-        value = JSON.stringify(value)
+        value = JSON.stringify(value);
       }
 
-      parts.push(`${key}=${encode(value)}`)
-    })
-  })
+      parts.push(`${key}=${encode(value)}`);
+    });
+  });
 
-  let serializeParams = parts.join('&')
+  let serializeParams = parts.join('&');
 
   if (serializeParams) {
-    const markIndex = url.indexOf('#')
+    const markIndex = url.indexOf('#');
 
     if (markIndex !== -1) {
-      url = url.slice(0, markIndex)
+      url = url.slice(0, markIndex);
     }
 
-    url += (url.indexOf('?') === -1 ? '?' : '&') + serializeParams
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializeParams;
   }
 
-  return url
+  return url;
 }
