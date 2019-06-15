@@ -1,13 +1,15 @@
-import { AxiosRequestConfig, AxiosPromise } from './types';
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types';
 import { buildURL } from './helpers/url';
-import { transformRequest } from './helpers/data';
+import { transformRequest, transformResponse } from './helpers/data';
 import { processHeaders } from './helpers/headers';
 import xhr from './xhr';
 
 // 主函数
 function axios(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config);
-  return xhr(config);
+  return xhr(config).then(res => {
+    return transformResponseData(res);
+  });
 }
 
 // 处理配置信息的方法
@@ -32,6 +34,11 @@ function transformRequestData(config: AxiosRequestConfig): any {
 function transformHeaders(config: AxiosRequestConfig): any {
   const { headers = {}, data } = config;
   return processHeaders(headers, data);
+}
+
+function transformResponseData(response: AxiosResponse): AxiosResponse {
+  response.data = transformResponse(response.data);
+  return response;
 }
 
 export default axios;

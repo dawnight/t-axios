@@ -23,7 +23,7 @@ export interface AxiosRequestConfig {
   responseType?: XMLHttpRequestResponseType;
 }
 
-export interface AxiosReponse {
+export interface AxiosResponse {
   data: any;
   status: number;
   statusText: string;
@@ -32,4 +32,4 @@ export interface AxiosReponse {
   request: any;
 }
 
-export interface AxiosPromise extends Promise<AxiosReponse> {}
+export interface AxiosPromise extends Promise<AxiosResponse> {}
