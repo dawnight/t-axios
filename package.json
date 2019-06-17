@@ -19,6 +19,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
+    "demo:server": "nodemon docs/server.js",
     "dev": "node examples/server.js",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "lint:fix": "tslint --fix 'src/**/*.ts' 'test/**/*.ts' 'examples/**/*.ts' ",

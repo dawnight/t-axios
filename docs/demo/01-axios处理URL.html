@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>test url demo</title>
+</head>
+<body>
+<script src="https://cdn.bootcss.com/axios/0.19.0/axios.min.js"></script>
+<script>
+  // 数组
+  axios.get('http://localhost:3000/user', {
+    params: {
+      fruits: ['apple', 'banana']
+    }
+  }).then(res => {
+    console.log(res);
+  });
+
+  // 对象
+  axios.get('http://localhost:3000/user', {
+    params: {
+      user: {
+        name: 'mark'
+      }
+    }
+  }).then(res => {
+    console.log(res);
+  });
+
+  // 日期
+  axios.get('http://localhost:3000/user', {
+    params: {
+      time: new Date()
+    }
+  }).then(res => {
+    console.log(res);
+  });
+
+  // 特殊字符，关于 URL 里允许的符号 https://stackoverflow.com/questions/1856785/characters-allowed-in-a-url
+  axios.get('http://localhost:3000/user', {
+    params: {
+      email: 'aa.*@aa.com',
+      code: 'AA:001',
+      price: '$84.25',
+      ids: '001,002',
+      name: 'sherry jin',
+      leftCode: '[',
+      rightCode: ']',
+      underline: 'mark_carl',
+      plus: '1+1=2!',
+      singleQuote: "I'm student",
+      Parentheses: '北京(首都)'
+    }
+  }).then(res => {
+    console.log(res);
+  });
+
+  // null 和 undefined
+  axios.get('http://localhost:3000/user', {
+    params: {
+      id: '001',
+      unique: null,
+      po: undefined
+    }
+  }).then(res => {
+    console.log(res);
+  });
+
+  // 去掉 URL 里的 哈希符号
+  axios.get('http://localhost:3000/user#getUserInfo', {
+    params: {
+      id: '002'
+    }
+  }).then(res => {
+    console.log(res);
+  });
+
+  // 保留 URL 中已经存在的参数
+  axios.get('http://localhost:3000/user?id=025', {
+    params: {
+      id: '985',
+      pid: '32541,32542'
+    }
+  }).then(res => {
+    console.log(res);
+  });
+
+</script>
+</body>
+</html>
