@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>isPlainObject</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * @param {any} obj The object to inspect.
+     * @returns {boolean} True if the argument appears to be a plain object.
+     */
+    function isPlainObject(obj) {
+      if (typeof obj !== 'object' || obj === null) {
+        return false;
+      }
+
+      let proto = obj;
+
+      while (Object.getPrototypeOf(proto) !== null) {
+        proto = Object.getPrototypeOf(proto)
+      }
+
+      return Object.getPrototypeOf(obj) === proto
+    }
+
+    let result;
+
+    result = isPlainObject(new Date());
+    console.log('new Date(): ', result);
+
+    result = isPlainObject(new Array());
+    console.log('new Array(): ', result);
+
+    result = isPlainObject([1, 2, 3]);
+    console.log('[1, 2, 3]: ', result);
+
+    result = isPlainObject(new Object());
+    console.log('new Object(): ', result);
+
+    result = isPlainObject({name: 'mark'});
+    console.log("{name: 'mark'}: ", result);
+
+    result = isPlainObject(Object.create(null));
+    console.log('Object.create(null): ', result);
+
+    result = isPlainObject(Object.create({}));
+    console.log('Object.create({}): ', result);
+
+  </script>
+</body>
+
+</html>
