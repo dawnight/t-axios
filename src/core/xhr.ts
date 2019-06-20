@@ -24,7 +24,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       }
 
       const responseHeaders = parseHeaders(request.getAllResponseHeaders());
+
       const responseData = responseType !== 'text' ? request.response : request.responseText;
+
       const response: AxiosResponse = {
         data: responseData,
         status: request.status,
@@ -33,6 +35,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request
       };
+
       handleResponse(response);
     };
 
@@ -42,7 +45,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     request.ontimeout = function handleTimeout() {
-      reject(createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED', request));
+      reject(createError(`Timeout of ${timeout}ms exceeded`, config, 'ECONNABORTED', request));
     };
 
     // 网络错误
