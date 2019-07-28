@@ -1,44 +1,45 @@
-import axios from '../../old';
+import axios from '../../src';
 
-axios({
-  url: '/extend/post',
-  method: 'post',
-  data: {
-    msg: 'hi'
-  }
-});
+// axios({
+//   url: '/extend/post',
+//   method: 'post',
+//   data: {
+//     msg: 'hi'
+//   }
+// });
+//
+// axios.request({
+//   url: '/extend/post',
+//   method: 'post',
+//   data: {
+//     msg: 'hello'
+//   }
+// });
 
-axios.request({
-  url: '/extend/post',
-  method: 'post',
-  data: {
-    msg: 'hello'
-  }
-});
+// axios.get('/extend/get');
+//
+// axios.options('/extend/options');
+//
+// axios.delete('/extend/delete');
+//
+// axios.head('/extend/head');
+//
+// axios.post('/extend/post', { msg: 'post' });
+//
+// axios.put('/extend/put', { msg: 'put' });
+//
+// axios.patch('/extend/patch', { msg: 'patch' });
 
-axios.get('/extend/get');
-
-axios.options('/extend/options');
-
-axios.delete('/extend/delete');
-
-axios.head('/extend/head');
-
-axios.post('/extend/post', { msg: 'post' });
-
-axios.put('/extend/put', { msg: 'put' });
-
-axios.patch('/extend/patch', { msg: 'patch' });
-
-axios({
-  url: '/extend/post',
-  method: 'post',
-  data: {
-    msg: 'hi'
-  }
-});
-
+// axios({
+//   url: '/extend/post',
+//   method: 'post',
+//   data: {
+//     msg: 'hi'
+//   }
+// });
+//
 // axios('/extend/post', {
+//   url: '/extend/post',
 //   method: 'post',
 //   data: {
 //     msg: 'hello'
@@ -61,7 +62,6 @@ function getUser<T>() {
     .then(res => res.data)
     .catch(err => console.error(err));
 }
-
 
 async function test() {
   const user = await getUser<User>();
