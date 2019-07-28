@@ -51,7 +51,7 @@ export function buildURL(url: string, params?: any): string {
         value = JSON.stringify(value);
       }
 
-      parts.push(`${key}=${encode(value)}`);
+      parts.push(`${encode(key)}=${encode(value)}`);
     });
   });
 

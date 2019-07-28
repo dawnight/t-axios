@@ -1,4 +1,4 @@
-import axios from '../../src/index';
+import axios from '../../old';
 
 axios({
   url: '/extend/post',
@@ -38,12 +38,12 @@ axios({
   }
 });
 
-axios('/extend/post', {
-  method: 'post',
-  data: {
-    msg: 'hello'
-  }
-});
+// axios('/extend/post', {
+//   method: 'post',
+//   data: {
+//     msg: 'hello'
+//   }
+// });
 
 interface ResponseData<T = any> {
   code: number;
