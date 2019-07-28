@@ -1,4 +1,5 @@
-import axios, { AxiosError } from '../../old';
+import axios, { AxiosError } from '../../src';
+
 
 axios({
   method: 'get',
@@ -21,7 +22,8 @@ axios({
 setTimeout(() => {
   axios({
     method: 'get',
-    url: '/error/get'
+    url: '/error/get',
+    timeout: 1000
   }).then((res) => {
     console.log(res);
   }).catch((e) => {
